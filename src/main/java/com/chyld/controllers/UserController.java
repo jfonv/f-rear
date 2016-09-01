@@ -8,19 +8,18 @@ import com.chyld.services.RoleService;
 import com.chyld.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 
 @RestController
+@RequestMapping(value = "/users")
 public class UserController {
 
     private static final String EMAIL_EXISTS_MESSAGE = "This email is in use";
@@ -36,7 +35,12 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(path = {"", "/"}, method = RequestMethod.GET)
+    public Page<User> index(@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+        return this.userService.findAll(page);
+    }
+
+    @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody AuthDto auth) throws JsonProcessingException {
         final String requestedEmail = auth.getUsername();
 

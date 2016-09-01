@@ -19,6 +19,7 @@ import java.util.List;
 public class User implements UserDetails {
     private int id;
     private int version;
+    private int attempts;
     private String username;
     private String password;
     private boolean enabled;
@@ -83,4 +84,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {return this.enabled;}
     public void setEnabled(boolean enabled) {this.enabled = enabled;}
+
+    @Column(nullable = false)
+    public int getAttempts() { return attempts; }
+    public void setAttempts(int attempts) { this.attempts = attempts; }
+
 }

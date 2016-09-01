@@ -1,5 +1,6 @@
 CREATE TABLE `fitness`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `attempts` INT NOT NULL DEFAULT 0,
   `version` INT NOT NULL DEFAULT 0,
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
