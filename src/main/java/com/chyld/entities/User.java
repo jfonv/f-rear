@@ -26,6 +26,7 @@ public class User implements UserDetails {
     private Profile profile;
     private Date created;
     private Date modified;
+    private List<Exercise> exercises;
 
     @Id
     @GeneratedValue
@@ -83,4 +84,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {return this.enabled;}
     public void setEnabled(boolean enabled) {this.enabled = enabled;}
+
+    @OneToMany(cascade = CascadeType.DETACH)
+    @JoinColumn(name="user_id")
+    public List<Exercise> getExercises() { return exercises; }
+    public void setExercises(List<Exercise> exercises) { this.exercises = exercises; }
+
+//    @Override
+//    public String toString() {
+//
+//    }
 }
